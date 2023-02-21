@@ -19,7 +19,6 @@
 
 #include <Ethernet.h>
 #include <EthernetUdp.h>
-#include <SPI.h>
 #include "TickTwo.h" //library to handle timing processes
 #include <ACAN2515.h>
 
@@ -33,7 +32,9 @@ unsigned int localPort = 1003;      // local port to listen on
 
 // buffers for receiving and sending data
 char packetBuffer[UDP_TX_PACKET_MAX_SIZE];  // buffer to hold incoming packet,
-char ReplyBuffer[] = "acknowledged";        // a string to send back
+char ReplyBuffer0[] = "BASE SENT";        // a string to send back
+char ReplyBuffer1[] = "ARM SENT"; 
+char ReplyBuffer2[] = "CLAW SENT"; 
 
 // An EthernetUDP instance to let us send and receive packets over UDP
 EthernetUDP Udp;
@@ -50,28 +51,43 @@ ACAN2515 can (MCP2515_CS, SPI1, MCP2515_INT) ; // CAN Uses SPI 1
 static const uint32_t QUARTZ_FREQUENCY = 8UL * 1000UL * 1000UL ; // 8 MHz 
 
 CANMessage frame; //buffer for CAN frame
+CANMessage outFrame; //out CAN message
+
+uint32_t BASE_OUT_ID = 0;
+uint32_t BASE_OUT_LEN = 6;
+
+uint32_t ARM_OUT_ID = 1;
+uint32_t ARM_OUT_LEN = 3;
+
+uint32_t CLAW_OUT_ID = 2;
+uint32_t CLAW_OUT_LEN = 3;
+
+
 
 void configureCan(); 
 void configureEthernet();
-void printCanMsg();
+void printCanMsg(CANMessage &frame);
+void onCanRecieve();
+bool readEthernet();
+void sendAckEthernet(int msg);
 
 
 void setup() {
 
   Serial.begin(9600);
   while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
+  ; // wait for serial port to connect. Needed for native USB port only
   }
-  configureEthernet();
   configureCan();
+  configureEthernet();
 }
 
 void loop() {
   // if there's data available, read a packet
+
+  //read ETHERNET msg
   int packetSize = Udp.parsePacket();
   if (packetSize) {
-    Serial.print("Received packet of size ");
-    Serial.println(packetSize);
     Serial.print("From ");
     IPAddress remote = Udp.remoteIP();
     for (int i=0; i < 4; i++) {
@@ -85,24 +101,36 @@ void loop() {
 
     // read the packet into packetBuffer
     Udp.read(packetBuffer, UDP_TX_PACKET_MAX_SIZE);
-    Serial.println("Contents:");
-    Serial.println(packetBuffer);
 
 
-    if(packetBuffer[0] == 1){
-      Serial.println("Address: 1");
+
+    switch(packetBuffer[0]){
+      case 0xff:
+        Serial.println("UPD Address: 0xff");
+        outFrame.id = BASE_OUT_ID;
+        outFrame.len = BASE_OUT_LEN;
+        memcpy(outFrame.data, packetBuffer+1, 6);
+        sendCanMsg();
+        sendAckEthernet(0);
+        break;
+      case 0x01:
+        Serial.println("UPD Address: 0x01");
+        outFrame.id = ARM_OUT_ID;
+        outFrame.len = ARM_OUT_LEN;
+        memcpy(outFrame.data, packetBuffer+1, 3);
+        sendCanMsg();
+        sendAckEthernet(1);
+        break;
+      case 0x02:
+        Serial.println("UDP Address: 0x02");
+        outFrame.id = CLAW_OUT_ID;
+        outFrame.len = CLAW_OUT_LEN;
+        memcpy(outFrame.data, packetBuffer+1, 3);
+        sendCanMsg();
+        sendAckEthernet(2);
+        break;
     }
-    if (packetBuffer[1] == 65) {
-      Serial.println("Contents:");
-      Serial.println("65 received via UDP!");
-    }
-
-    // send a reply to the IP address and port that sent us the packet we received
-    Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
-    Udp.write(ReplyBuffer);
-    Udp.endPacket();
   }
-  delay(10);
 }
 
 void configureCan(){
@@ -115,10 +143,14 @@ void configureCan(){
 
   Serial.println ("Configure ACAN2515") ;
   ACAN2515Settings settings (QUARTZ_FREQUENCY, 100UL * 1000UL) ; // CAN bit rate 100 kb/s
-  const uint16_t errorCode = can.begin (settings,  canISR) ;
+  settings.mRequestedMode = ACAN2515Settings::NormalMode ; // Select Normal mode
+  const uint16_t errorCode = can.begin (settings,  onCanRecieve) ;
   if(errorCode == 0){
     Serial.print ("Actual bit rate: ") ;
     Serial.print (settings.actualBitRate ()) ;
+  }
+  else{
+    Serial.print(errorCode);
   }
 
 
@@ -147,15 +179,14 @@ void configureEthernet(){
 }
 
 //handle and updates values when/if a can message is recieved
-void canISR(){
+void onCanRecieve(){
   can.isr();
   can.receive(frame);
-
   printCanMsg(frame);
 
 }
 
-void printCanMsg(CANMessage frame){
+void printCanMsg(CANMessage &frame){
     Serial.print ("  id: ");Serial.println (frame.id,HEX);
     Serial.print ("  ext: ");Serial.println (frame.ext);
     Serial.print ("  rtr: ");Serial.println (frame.rtr);
@@ -166,4 +197,36 @@ void printCanMsg(CANMessage frame){
     }
     Serial.println ("");
 }
+
+void sendCanMsg(){
+  const bool ok = can.tryToSend (outFrame) ;
+  if(ok){
+    Serial.println ("SENT CAN") ;
+    printCanMsg(outFrame);
+  }
+  else{
+    Serial.println ("Send failure") ;
+  }
+}
+
+void sendAckEthernet(int msg){
+  if(msg = 0){
+    Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
+    Udp.write(ReplyBuffer0);
+    Udp.endPacket();
+  }
+  if(msg = 1){
+    Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
+    Udp.write(ReplyBuffer1);
+    Udp.endPacket();
+    
+  }
+  if(msg = 2){
+    Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
+    Udp.write(ReplyBuffer2);
+    Udp.endPacket();
+  }
+
+}
+
 
