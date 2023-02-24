@@ -61,9 +61,8 @@ void sendAckEthernet(int msg);
 void setup() {
 
   Serial.begin(9600);
-  while (!Serial) {
-  ; // wait for serial port to connect. Needed for native USB port only
-  }
+
+  delay(1000);
   configureCan();
   configureEthernet();
 }
@@ -76,8 +75,7 @@ void loop() {
   // outFrame.len = BASE_OUT_LEN;
   // memcpy(outFrame.data, testy, 6);
   // sendCanMsg();
-
-  delay(750);
+  
   int packetSize = Udp.parsePacket();
   if (packetSize) {
     Serial.print("From ");
