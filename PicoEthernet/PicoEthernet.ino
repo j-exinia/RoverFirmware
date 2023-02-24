@@ -43,6 +43,11 @@ uint32_t ARM_OUT_LEN = 3;
 uint32_t CLAW_OUT_ID = 2;
 uint32_t CLAW_OUT_LEN = 3;
 
+uint8_t testy[6] = {255,255,25,2,5,0};
+
+static bool gSendMessage = false ;
+
+uint32_t msgSent = 0;
 
 
 void configureCan(); 
@@ -67,6 +72,12 @@ void loop() {
   // if there's data available, read a packet
 
   //read ETHERNET msg
+  outFrame.id = BASE_OUT_ID;
+  outFrame.len = BASE_OUT_LEN;
+  memcpy(outFrame.data, testy, 6);
+  sendCanMsg();
+
+  delay(750);
   int packetSize = Udp.parsePacket();
   if (packetSize) {
     Serial.print("From ");
@@ -82,9 +93,7 @@ void loop() {
 
     // read the packet into packetBuffer
     Udp.read(packetBuffer, UDP_TX_PACKET_MAX_SIZE);
-
-
-
+    
     switch(packetBuffer[0]){
       case 0xff:
         Serial.println("UPD Address: 0xff");
@@ -181,11 +190,15 @@ void printCanMsg(CANMessage &frame){
 
 void sendCanMsg(){
   const bool ok = can.tryToSend (outFrame) ;
+  const uint16_t n = can.transmitBufferCount (0);
   if(ok){
     Serial.println ("SENT CAN") ;
-    printCanMsg(outFrame);
+    //printCanMsg(outFrame);
+    msgSent = msgSent+1;
   }
   else{
+    Serial.print("Num of messages b4 fail:");Serial.println(msgSent);
+    Serial.print("Num of Buff GARFs:");Serial.println(n);
     Serial.println ("Send failure") ;
   }
 }
