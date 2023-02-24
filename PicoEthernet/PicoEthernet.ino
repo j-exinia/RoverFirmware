@@ -72,10 +72,10 @@ void loop() {
   // if there's data available, read a packet
 
   //read ETHERNET msg
-  outFrame.id = BASE_OUT_ID;
-  outFrame.len = BASE_OUT_LEN;
-  memcpy(outFrame.data, testy, 6);
-  sendCanMsg();
+  // outFrame.id = BASE_OUT_ID;
+  // outFrame.len = BASE_OUT_LEN;
+  // memcpy(outFrame.data, testy, 6);
+  // sendCanMsg();
 
   delay(750);
   int packetSize = Udp.parsePacket();
