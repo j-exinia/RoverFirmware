@@ -11,10 +11,10 @@ This board and firmware was devloped for the University Rover Challenge. The Uni
 
 
 - [Firmware](#firmware)
-    -[High Level Overview](#high-level-overview) 
+    - [High Level Overview](#high-level-overview) 
 - [Hardware](#hardware)
-    -[Electrical Components](#electrical-components)
-    -[Schematics](#schematics) 
+    - [Electrical Components](#electrical-components)
+    - [Schematics](#schematics) 
 
 <!-- tocstop -->
 
