@@ -1,0 +1,684 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 9em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD22\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">1/30/2023</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">10:16:43 AM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:02</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc" class="file"><acronym title="C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc">C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">104</td></tr>
+</table>
+</td>
+</table><a name="ID2NFJ50BTONSCBGUHKZK4MONBRG1L2GCFVJSY3EI0MCABALXNCIFO"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDOKLZPKE2I4O1PXPTNX2XO3GREOGDKY1S3KJS22CYJ3DTPRZK42NH">Clearance Constraint (Gap=10mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAPKJC2O2T5R5HJMUCFS0MDXVSNGHQR0HFDDJ0RL1ONUPLQARIMAE">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDYWW0GK3ZQG40JOOYBXBRJVUFPOPJSRIPG4QTZ0F03W0T0XCLJBNJ">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID5D35G3IQLEJ2MOWDMUE01THWTI5AWZW12IPQQPECXNUI3Q11VHE">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDDSUNXPG3KA0KKDYZWHOOOU13OBORRIR0FFKU1CNGFPSWH0HXC3TO">Width Constraint (Min=10mil) (Max=30mil) (Preferred=10mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDE15R2F35NJMUFLFXLQKPQWBQWNNCHU4Y1R04VJMR0WSYCDUZUJXF">Power Plane Connect Rule(Relief Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDCK0F5JMBEFZ2ODYBFOKXGLYSBD0ZBG5VCVZUVELFYHPG5Q3PSGH">Hole Size Constraint (Min=1mil) (Max=100mil) (All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID1IXEQL2I1NCCPT0L1U1YZ3TDAGDQWWVXTIBF4MKKXAI5AYFYLGAP">Hole To Hole Clearance (Gap=10mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDVMBO34AZSMEECZOBMJX50Q34VEKGOZUWVJOW2BK5OBARUZFIX1E">Minimum Solder Mask Sliver (Gap=10mil) (All),(All)</a></td>
+<td class="column2">2</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDDXCKC5JYWKVNADUDRNDG4HGNOS0RYSCGD21DLEBDSL10G3JXASO">Silk To Solder Mask (Clearance=10mil) (IsPad),(All)</a></td>
+<td class="column2">61</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID4DCUTR54TQ00LZSS35UGO0VYIIO0DFS4EL4APBGAIFYPSNMKOMF">Silk to Silk (Clearance=10mil) (All),(All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDZIEG0RGVNI0SMM4ASK25CA5YSOOOZS4XZGHEGFMFW5WVDGVGZKGK">Net Antennae (Tolerance=0mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID13SYPLK0YRT0MZT5NSACSQOADCUOBIS3BO1QXHMGNBAYWGS2EFGI">Room PowerDelievery (Bounding Region = (7045mil, 4830mil, 8575mil, 5310mil) (InComponentClass('PowerDelievery'))</a></td>
+<td class="column2">6</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDWMJMXELXCQ1CKUSLEPV1PACXBNLNB3ZPBTVLXSLOXWSSOUXNSJ1I">Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico'))</a></td>
+<td class="column2">13</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDHSNSQ1TAU1JONJUBHWWIF0SZRHDRIFTDPCVK3UNT0ETVXLV2QYTN">Room Ethernet (Bounding Region = (7045mil, 1785mil, 7180mil, 2505mil) (InComponentClass('Ethernet'))</a></td>
+<td class="column2">1</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID3HSVUOFLDC2PBQ1WAI2KF0513CGPTKZDCJEXAEMRP0HP2VKE3DYF">Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN'))</a></td>
+<td class="column2">13</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDP1GJ0ZDV4GLYMNFT2RUCHM2PFOFWHKXFYSPPKTHQ0XBVS3E0XGPK">Height Constraint (Min=0mil) (Max=1000mil) (Prefered=500mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">104</td>
+</tr>
+</table><br><a name="IDCK0F5JMBEFZ2ODYBFOKXGLYSBD0ZBG5VCVZUVELFYHPG5Q3PSGH"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Hole Size Constraint (Min=1mil) (Max=100mil) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.375mil|Location2.X=2847.625mil|Location1.Y=1607.375mil|Location2.Y=1742.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.375mil|Location2.X=2847.625mil|Location1.Y=1607.375mil|Location2.Y=1742.625mil|Absolute=True">Hole Size Constraint: (134mil &gt; 100mil) Pad Free-2(2780mil,1675mil) on Multi-Layer Actual Hole Size = 134mil</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2722.375mil|Location2.X=2857.625mil|Location1.Y=4257.375mil|Location2.Y=4392.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2722.375mil|Location2.X=2857.625mil|Location1.Y=4257.375mil|Location2.Y=4392.625mil|Absolute=True">Hole Size Constraint: (134mil &gt; 100mil) Pad Free-2(2790mil,4325mil) on Multi-Layer Actual Hole Size = 134mil</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4457.375mil|Location2.X=4592.625mil|Location1.Y=1607.375mil|Location2.Y=1742.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4457.375mil|Location2.X=4592.625mil|Location1.Y=1607.375mil|Location2.Y=1742.625mil|Absolute=True">Hole Size Constraint: (134mil &gt; 100mil) Pad Free-2(4525mil,1675mil) on Multi-Layer Actual Hole Size = 134mil</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4467.375mil|Location2.X=4602.625mil|Location1.Y=4262.375mil|Location2.Y=4397.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4467.375mil|Location2.X=4602.625mil|Location1.Y=4262.375mil|Location2.Y=4397.625mil|Absolute=True">Hole Size Constraint: (134mil &gt; 100mil) Pad Free-2(4535mil,4330mil) on Multi-Layer Actual Hole Size = 134mil</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDVMBO34AZSMEECZOBMJX50Q34VEKGOZUWVJOW2BK5OBARUZFIX1E"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Minimum Solder Mask Sliver (Gap=10mil) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3544.44mil|Location2.X=3555.69mil|Location1.Y=4030.815mil|Location2.Y=4042.065mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3544.44mil|Location2.X=3555.69mil|Location1.Y=4030.815mil|Location2.Y=4042.065mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (8.732mil &lt; 10mil) Between Pad U1-A(3520.045mil,4042.346mil) on Top Layer And Pad U1-TP3(3587.958mil,4054.157mil) on Top Layer [Top Solder] Mask Sliver [8.732mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3698.967mil|Location2.X=3710.217mil|Location1.Y=4030.815mil|Location2.Y=4042.065mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3698.967mil|Location2.X=3710.217mil|Location1.Y=4030.815mil|Location2.Y=4042.065mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (8.732mil &lt; 10mil) Between Pad U1-B(3734.612mil,4042.346mil) on Top Layer And Pad U1-TP2(3666.698mil,4054.157mil) on Top Layer [Top Solder] Mask Sliver [8.732mil]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDDXCKC5JYWKVNADUDRNDG4HGNOS0RYSCGD21DLEBDSL10G3JXASO"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk To Solder Mask (Clearance=10mil) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4867.721mil|Location2.X=4878.971mil|Location1.Y=3986.501mil|Location2.Y=3997.751mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4867.721mil|Location2.X=4878.971mil|Location1.Y=3986.501mil|Location2.Y=3997.751mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad C1-1(4895mil,3968.504mil) on Top Layer And Track (4873.346mil,4000mil)(4916.654mil,4000mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4867.721mil|Location2.X=4878.971mil|Location1.Y=4002.249mil|Location2.Y=4013.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4867.721mil|Location2.X=4878.971mil|Location1.Y=4002.249mil|Location2.Y=4013.499mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad C1-2(4895mil,4031.496mil) on Top Layer And Track (4873.346mil,4000mil)(4916.654mil,4000mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4117.721mil|Location2.X=4128.971mil|Location1.Y=3896.501mil|Location2.Y=3907.751mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4117.721mil|Location2.X=4128.971mil|Location1.Y=3896.501mil|Location2.Y=3907.751mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad C2-1(4145mil,3878.504mil) on Top Layer And Track (4123.346mil,3910mil)(4166.654mil,3910mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4117.721mil|Location2.X=4128.971mil|Location1.Y=3912.249mil|Location2.Y=3923.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4117.721mil|Location2.X=4128.971mil|Location1.Y=3912.249mil|Location2.Y=3923.499mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad C2-2(4145mil,3941.496mil) on Top Layer And Track (4123.346mil,3910mil)(4166.654mil,3910mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2477.722mil|Location2.X=2488.972mil|Location1.Y=2745.005mil|Location2.Y=2756.255mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2477.722mil|Location2.X=2488.972mil|Location1.Y=2745.005mil|Location2.Y=2756.255mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad C3-1(2505mil,2727.008mil) on Top Layer And Track (2483.347mil,2758.504mil)(2526.653mil,2758.504mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2477.722mil|Location2.X=2488.972mil|Location1.Y=2760.753mil|Location2.Y=2772.003mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2477.722mil|Location2.X=2488.972mil|Location1.Y=2760.753mil|Location2.Y=2772.003mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad C3-2(2505mil,2790mil) on Top Layer And Track (2483.347mil,2758.504mil)(2526.653mil,2758.504mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2477.722mil|Location2.X=2488.972mil|Location1.Y=2913.745mil|Location2.Y=2924.995mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2477.722mil|Location2.X=2488.972mil|Location1.Y=2913.745mil|Location2.Y=2924.995mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad C4-1(2505mil,2942.992mil) on Top Layer And Track (2483.347mil,2911.496mil)(2526.653mil,2911.496mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2477.722mil|Location2.X=2488.972mil|Location1.Y=2897.997mil|Location2.Y=2909.247mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2477.722mil|Location2.X=2488.972mil|Location1.Y=2897.997mil|Location2.Y=2909.247mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad C4-2(2505mil,2880mil) on Top Layer And Track (2483.347mil,2911.496mil)(2526.653mil,2911.496mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4692.721mil|Location2.X=4703.971mil|Location1.Y=3855.753mil|Location2.Y=3867.003mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4692.721mil|Location2.X=4703.971mil|Location1.Y=3855.753mil|Location2.Y=3867.003mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad D1-1(4720mil,3885mil) on Top Layer And Track (4698.346mil,3853.504mil)(4741.654mil,3853.504mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4692.721mil|Location2.X=4703.971mil|Location1.Y=3840.005mil|Location2.Y=3851.255mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4692.721mil|Location2.X=4703.971mil|Location1.Y=3840.005mil|Location2.Y=3851.255mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad D1-2(4720mil,3822.008mil) on Top Layer And Track (4698.346mil,3853.504mil)(4741.654mil,3853.504mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2442.722mil|Location2.X=2453.972mil|Location1.Y=1945.753mil|Location2.Y=1957.003mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2442.722mil|Location2.X=2453.972mil|Location1.Y=1945.753mil|Location2.Y=1957.003mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad D2-1(2470mil,1975mil) on Top Layer And Track (2448.347mil,1943.504mil)(2491.653mil,1943.504mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2442.722mil|Location2.X=2453.972mil|Location1.Y=1930.005mil|Location2.Y=1941.255mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2442.722mil|Location2.X=2453.972mil|Location1.Y=1930.005mil|Location2.Y=1941.255mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad D2-2(2470mil,1912.008mil) on Top Layer And Track (2448.347mil,1943.504mil)(2491.653mil,1943.504mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4486.501mil|Location2.X=4497.751mil|Location1.Y=3212.722mil|Location2.Y=3223.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4486.501mil|Location2.X=4497.751mil|Location1.Y=3212.722mil|Location2.Y=3223.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad D3-1(4468.504mil,3240mil) on Top Layer And Track (4500mil,3218.347mil)(4500mil,3261.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4502.249mil|Location2.X=4513.499mil|Location1.Y=3212.722mil|Location2.Y=3223.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4502.249mil|Location2.X=4513.499mil|Location1.Y=3212.722mil|Location2.Y=3223.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad D3-2(4531.496mil,3240mil) on Top Layer And Track (4500mil,3218.347mil)(4500mil,3261.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4477.997mil|Location2.X=4489.247mil|Location1.Y=2582.722mil|Location2.Y=2593.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4477.997mil|Location2.X=4489.247mil|Location1.Y=2582.722mil|Location2.Y=2593.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad D4-1(4460mil,2610mil) on Top Layer And Track (4491.496mil,2588.347mil)(4491.496mil,2631.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4493.745mil|Location2.X=4504.995mil|Location1.Y=2582.722mil|Location2.Y=2593.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4493.745mil|Location2.X=4504.995mil|Location1.Y=2582.722mil|Location2.Y=2593.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad D4-2(4522.992mil,2610mil) on Top Layer And Track (4491.496mil,2588.347mil)(4491.496mil,2631.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4466.501mil|Location2.X=4477.751mil|Location1.Y=1962.722mil|Location2.Y=1973.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4466.501mil|Location2.X=4477.751mil|Location1.Y=1962.722mil|Location2.Y=1973.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad D5-1(4448.504mil,1990mil) on Top Layer And Track (4480mil,1968.347mil)(4480mil,2011.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4482.249mil|Location2.X=4493.499mil|Location1.Y=1962.722mil|Location2.Y=1973.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4482.249mil|Location2.X=4493.499mil|Location1.Y=1962.722mil|Location2.Y=1973.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad D5-2(4511.496mil,1990mil) on Top Layer And Track (4480mil,1968.347mil)(4480mil,2011.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2767.249mil|Location2.X=2778.499mil|Location1.Y=4047.722mil|Location2.Y=4058.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2767.249mil|Location2.X=2778.499mil|Location1.Y=4047.722mil|Location2.Y=4058.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad D6-1(2796.496mil,4075mil) on Top Layer And Track (2765mil,4053.347mil)(2765mil,4096.654mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2751.501mil|Location2.X=2762.751mil|Location1.Y=4047.722mil|Location2.Y=4058.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2751.501mil|Location2.X=2762.751mil|Location1.Y=4047.722mil|Location2.Y=4058.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad D6-2(2733.504mil,4075mil) on Top Layer And Track (2765mil,4053.347mil)(2765mil,4096.654mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2945.753mil|Location2.X=2957.003mil|Location1.Y=4047.722mil|Location2.Y=4058.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2945.753mil|Location2.X=2957.003mil|Location1.Y=4047.722mil|Location2.Y=4058.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R10-1(2975mil,4075mil) on Top Layer And Track (2943.504mil,4053.347mil)(2943.504mil,4096.654mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2930.005mil|Location2.X=2941.255mil|Location1.Y=4047.722mil|Location2.Y=4058.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2930.005mil|Location2.X=2941.255mil|Location1.Y=4047.722mil|Location2.Y=4058.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R10-2(2912.008mil,4075mil) on Top Layer And Track (2943.504mil,4053.347mil)(2943.504mil,4096.654mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4692.721mil|Location2.X=4703.971mil|Location1.Y=4003.745mil|Location2.Y=4014.995mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4692.721mil|Location2.X=4703.971mil|Location1.Y=4003.745mil|Location2.Y=4014.995mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R1-1(4720mil,4032.992mil) on Top Layer And Track (4698.346mil,4001.496mil)(4741.654mil,4001.496mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4692.721mil|Location2.X=4703.971mil|Location1.Y=3987.997mil|Location2.Y=3999.247mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4692.721mil|Location2.X=4703.971mil|Location1.Y=3987.997mil|Location2.Y=3999.247mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R1-2(4720mil,3970mil) on Top Layer And Track (4698.346mil,4001.496mil)(4741.654mil,4001.496mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2847.249mil|Location2.X=2858.499mil|Location1.Y=2357.722mil|Location2.Y=2368.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2847.249mil|Location2.X=2858.499mil|Location1.Y=2357.722mil|Location2.Y=2368.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R2-1(2876.496mil,2385mil) on Top Layer And Track (2845mil,2363.347mil)(2845mil,2406.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2831.501mil|Location2.X=2842.751mil|Location1.Y=2357.722mil|Location2.Y=2368.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2831.501mil|Location2.X=2842.751mil|Location1.Y=2357.722mil|Location2.Y=2368.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R2-2(2813.504mil,2385mil) on Top Layer And Track (2845mil,2363.347mil)(2845mil,2406.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2522.722mil|Location2.X=2533.972mil|Location1.Y=2572.997mil|Location2.Y=2584.247mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2522.722mil|Location2.X=2533.972mil|Location1.Y=2572.997mil|Location2.Y=2584.247mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R3-1(2550mil,2555mil) on Top Layer And Track (2528.347mil,2586.496mil)(2571.653mil,2586.496mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2522.722mil|Location2.X=2533.972mil|Location1.Y=2588.745mil|Location2.Y=2599.995mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2522.722mil|Location2.X=2533.972mil|Location1.Y=2588.745mil|Location2.Y=2599.995mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R3-2(2550mil,2617.992mil) on Top Layer And Track (2528.347mil,2586.496mil)(2571.653mil,2586.496mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2996.501mil|Location2.X=3007.751mil|Location1.Y=3362.722mil|Location2.Y=3373.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2996.501mil|Location2.X=3007.751mil|Location1.Y=3362.722mil|Location2.Y=3373.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R4-1(2978.504mil,3390mil) on Top Layer And Track (3010mil,3368.347mil)(3010mil,3411.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3012.249mil|Location2.X=3023.499mil|Location1.Y=3362.722mil|Location2.Y=3373.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3012.249mil|Location2.X=3023.499mil|Location1.Y=3362.722mil|Location2.Y=3373.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R4-2(3041.496mil,3390mil) on Top Layer And Track (3010mil,3368.347mil)(3010mil,3411.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2847.722mil|Location2.X=2858.972mil|Location1.Y=3720.753mil|Location2.Y=3732.003mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2847.722mil|Location2.X=2858.972mil|Location1.Y=3720.753mil|Location2.Y=3732.003mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R5-1(2875mil,3750mil) on Top Layer And Track (2853.347mil,3718.504mil)(2896.653mil,3718.504mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2847.722mil|Location2.X=2858.972mil|Location1.Y=3705.005mil|Location2.Y=3716.255mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2847.722mil|Location2.X=2858.972mil|Location1.Y=3705.005mil|Location2.Y=3716.255mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R5-2(2875mil,3687.008mil) on Top Layer And Track (2853.347mil,3718.504mil)(2896.653mil,3718.504mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2442.722mil|Location2.X=2453.972mil|Location1.Y=2077.249mil|Location2.Y=2088.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2442.722mil|Location2.X=2453.972mil|Location1.Y=2077.249mil|Location2.Y=2088.499mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R6-1(2470mil,2106.496mil) on Top Layer And Track (2448.347mil,2075mil)(2491.653mil,2075mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2442.722mil|Location2.X=2453.972mil|Location1.Y=2061.501mil|Location2.Y=2072.751mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2442.722mil|Location2.X=2453.972mil|Location1.Y=2061.501mil|Location2.Y=2072.751mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R6-2(2470mil,2043.504mil) on Top Layer And Track (2448.347mil,2075mil)(2491.653mil,2075mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4305.005mil|Location2.X=4316.255mil|Location1.Y=3212.722mil|Location2.Y=3223.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4305.005mil|Location2.X=4316.255mil|Location1.Y=3212.722mil|Location2.Y=3223.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R7-1(4287.008mil,3240mil) on Top Layer And Track (4318.504mil,3218.347mil)(4318.504mil,3261.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4320.753mil|Location2.X=4332.003mil|Location1.Y=3212.722mil|Location2.Y=3223.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4320.753mil|Location2.X=4332.003mil|Location1.Y=3212.722mil|Location2.Y=3223.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R7-2(4350mil,3240mil) on Top Layer And Track (4318.504mil,3218.347mil)(4318.504mil,3261.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4259.391mil|Location2.X=4270.641mil|Location1.Y=2574.075mil|Location2.Y=2585.325mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4259.391mil|Location2.X=4270.641mil|Location1.Y=2574.075mil|Location2.Y=2585.325mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (9.419mil &lt; 10mil) Between Pad R8-1(4280mil,2610mil) on Top Layer And Text "R8" (4265.016mil,2510.01mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [9.419mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4297.997mil|Location2.X=4309.247mil|Location1.Y=2582.722mil|Location2.Y=2593.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4297.997mil|Location2.X=4309.247mil|Location1.Y=2582.722mil|Location2.Y=2593.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R8-1(4280mil,2610mil) on Top Layer And Track (4311.496mil,2588.347mil)(4311.496mil,2631.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4329.369mil|Location2.X=4340.619mil|Location1.Y=2574.075mil|Location2.Y=2585.325mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4329.369mil|Location2.X=4340.619mil|Location1.Y=2574.075mil|Location2.Y=2585.325mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (9.419mil &lt; 10mil) Between Pad R8-2(4342.992mil,2610mil) on Top Layer And Text "R8" (4265.016mil,2510.01mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [9.419mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4313.745mil|Location2.X=4324.995mil|Location1.Y=2582.722mil|Location2.Y=2593.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4313.745mil|Location2.X=4324.995mil|Location1.Y=2582.722mil|Location2.Y=2593.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R8-2(4342.992mil,2610mil) on Top Layer And Track (4311.496mil,2588.347mil)(4311.496mil,2631.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4306.501mil|Location2.X=4317.751mil|Location1.Y=1962.722mil|Location2.Y=1973.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4306.501mil|Location2.X=4317.751mil|Location1.Y=1962.722mil|Location2.Y=1973.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R9-1(4288.504mil,1990mil) on Top Layer And Track (4320mil,1968.347mil)(4320mil,2011.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4322.249mil|Location2.X=4333.499mil|Location1.Y=1962.722mil|Location2.Y=1973.972mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4322.249mil|Location2.X=4333.499mil|Location1.Y=1962.722mil|Location2.Y=1973.972mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad R9-2(4351.496mil,1990mil) on Top Layer And Track (4320mil,1968.347mil)(4320mil,2011.653mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2681.176mil|Location2.X=2692.426mil|Location1.Y=3601.265mil|Location2.Y=3612.515mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2681.176mil|Location2.X=2692.426mil|Location1.Y=3601.265mil|Location2.Y=3612.515mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.343mil &lt; 10mil) Between Pad SW1-1(2720mil,3593.11mil) on Top Layer And Track (2651.102mil,3606.89mil)(2680.63mil,3606.89mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.343mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2681.176mil|Location2.X=2692.426mil|Location1.Y=3601.265mil|Location2.Y=3612.515mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2681.176mil|Location2.X=2692.426mil|Location1.Y=3601.265mil|Location2.Y=3612.515mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.343mil &lt; 10mil) Between Pad SW1-1(2720mil,3593.11mil) on Top Layer And Track (2680.63mil,3606.89mil)(2680.63mil,3606.89mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.343mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2747.574mil|Location2.X=2758.824mil|Location1.Y=3601.265mil|Location2.Y=3612.515mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2747.574mil|Location2.X=2758.824mil|Location1.Y=3601.265mil|Location2.Y=3612.515mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.343mil &lt; 10mil) Between Pad SW1-1(2720mil,3593.11mil) on Top Layer And Track (2759.37mil,3606.89mil)(2788.897mil,3606.89mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.343mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2681.176mil|Location2.X=2692.426mil|Location1.Y=3837.485mil|Location2.Y=3848.735mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2681.176mil|Location2.X=2692.426mil|Location1.Y=3837.485mil|Location2.Y=3848.735mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.343mil &lt; 10mil) Between Pad SW1-2(2720mil,3856.89mil) on Top Layer And Track (2651.103mil,3843.11mil)(2680.63mil,3843.11mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.343mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2747.574mil|Location2.X=2758.824mil|Location1.Y=3837.485mil|Location2.Y=3848.735mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2747.574mil|Location2.X=2758.824mil|Location1.Y=3837.485mil|Location2.Y=3848.735mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.343mil &lt; 10mil) Between Pad SW1-2(2720mil,3856.89mil) on Top Layer And Track (2759.37mil,3843.11mil)(2759.37mil,3843.11mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.343mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2747.574mil|Location2.X=2758.824mil|Location1.Y=3837.485mil|Location2.Y=3848.735mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2747.574mil|Location2.X=2758.824mil|Location1.Y=3837.485mil|Location2.Y=3848.735mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.343mil &lt; 10mil) Between Pad SW1-2(2720mil,3856.89mil) on Top Layer And Track (2759.37mil,3843.11mil)(2788.898mil,3843.11mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.343mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2571.265mil|Location2.X=2582.515mil|Location1.Y=3336.176mil|Location2.Y=3347.426mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2571.265mil|Location2.X=2582.515mil|Location1.Y=3336.176mil|Location2.Y=3347.426mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.343mil &lt; 10mil) Between Pad SW2-1(2563.11mil,3375mil) on Top Layer And Track (2576.89mil,3306.103mil)(2576.89mil,3335.63mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.343mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2571.265mil|Location2.X=2582.515mil|Location1.Y=3402.574mil|Location2.Y=3413.824mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2571.265mil|Location2.X=2582.515mil|Location1.Y=3402.574mil|Location2.Y=3413.824mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.343mil &lt; 10mil) Between Pad SW2-1(2563.11mil,3375mil) on Top Layer And Track (2576.89mil,3414.37mil)(2576.89mil,3414.37mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.343mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2571.265mil|Location2.X=2582.515mil|Location1.Y=3402.574mil|Location2.Y=3413.824mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2571.265mil|Location2.X=2582.515mil|Location1.Y=3402.574mil|Location2.Y=3413.824mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.343mil &lt; 10mil) Between Pad SW2-1(2563.11mil,3375mil) on Top Layer And Track (2576.89mil,3414.37mil)(2576.89mil,3443.898mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.343mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.485mil|Location2.X=2818.735mil|Location1.Y=3336.176mil|Location2.Y=3347.426mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.485mil|Location2.X=2818.735mil|Location1.Y=3336.176mil|Location2.Y=3347.426mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.343mil &lt; 10mil) Between Pad SW2-2(2826.89mil,3375mil) on Top Layer And Track (2813.11mil,3306.102mil)(2813.11mil,3335.63mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.343mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.485mil|Location2.X=2818.735mil|Location1.Y=3336.176mil|Location2.Y=3347.426mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.485mil|Location2.X=2818.735mil|Location1.Y=3336.176mil|Location2.Y=3347.426mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.343mil &lt; 10mil) Between Pad SW2-2(2826.89mil,3375mil) on Top Layer And Track (2813.11mil,3335.63mil)(2813.11mil,3335.63mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.343mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.485mil|Location2.X=2818.735mil|Location1.Y=3402.574mil|Location2.Y=3413.824mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.485mil|Location2.X=2818.735mil|Location1.Y=3402.574mil|Location2.Y=3413.824mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.343mil &lt; 10mil) Between Pad SW2-2(2826.89mil,3375mil) on Top Layer And Track (2813.11mil,3414.37mil)(2813.11mil,3443.897mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.343mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2646.154mil|Location2.X=2653.82mil|Location1.Y=2925.453mil|Location2.Y=2933.12mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2646.154mil|Location2.X=2653.82mil|Location1.Y=2925.453mil|Location2.Y=2933.12mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 10mil) Between Pad U2-6(2685.669mil,2930mil) on Top Layer And Text "C4" (2560.016mil,2885.01mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2646.154mil|Location2.X=2653.82mil|Location1.Y=2881.176mil|Location2.Y=2888.843mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2646.154mil|Location2.X=2653.82mil|Location1.Y=2881.176mil|Location2.Y=2888.843mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 10mil) Between Pad U2-7(2685.669mil,2880mil) on Top Layer And Text "C4" (2560.016mil,2885.01mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2641.154mil|Location2.X=2648.82mil|Location1.Y=2786.157mil|Location2.Y=2793.824mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2641.154mil|Location2.X=2648.82mil|Location1.Y=2786.157mil|Location2.Y=2793.824mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 10mil) Between Pad U2-9(2685.669mil,2780mil) on Top Layer And Text "C3" (2555.016mil,2730.01mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4510.082mil|Location2.X=4521.332mil|Location1.Y=3826.107mil|Location2.Y=3837.357mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4510.082mil|Location2.X=4521.332mil|Location1.Y=3826.107mil|Location2.Y=3837.357mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.87mil &lt; 10mil) Between Pad U4-1(4560mil,3849.449mil) on Top Layer And Track (4507.835mil,3808.11mil)(4507.835mil,4071.89mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.87mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4510.082mil|Location2.X=4521.332mil|Location1.Y=3916.659mil|Location2.Y=3927.909mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4510.082mil|Location2.X=4521.332mil|Location1.Y=3916.659mil|Location2.Y=3927.909mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.87mil &lt; 10mil) Between Pad U4-2(4560mil,3940mil) on Top Layer And Track (4507.835mil,3808.11mil)(4507.835mil,4071.89mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.87mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4510.082mil|Location2.X=4521.332mil|Location1.Y=4007.21mil|Location2.Y=4018.46mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4510.082mil|Location2.X=4521.332mil|Location1.Y=4007.21mil|Location2.Y=4018.46mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.87mil &lt; 10mil) Between Pad U4-3(4560mil,4030.551mil) on Top Layer And Track (4507.835mil,3808.11mil)(4507.835mil,4071.89mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.87mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4348.668mil|Location2.X=4359.918mil|Location1.Y=3872.416mil|Location2.Y=3883.666mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4348.668mil|Location2.X=4359.918mil|Location1.Y=3872.416mil|Location2.Y=3883.666mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.87mil &lt; 10mil) Between Pad U4-4(4310mil,3940mil) on Top Layer And Track (4362.165mil,3808.11mil)(4362.165mil,4071.89mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.87mil]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="ID4DCUTR54TQ00LZSS35UGO0VYIIO0DFS4EL4APBGAIFYPSNMKOMF"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk to Silk (Clearance=10mil) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2680.044mil|Location2.X=2691.294mil|Location1.Y=3221.033mil|Location2.Y=3232.283mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2680.044mil|Location2.X=2691.294mil|Location1.Y=3221.033mil|Location2.Y=3232.283mil|Absolute=True">Silk To Silk Clearance Constraint: (6.703mil &lt; 10mil) Between Arc (2685.669mil,3213.465mil) on Top Overlay And Text "U2" (2665.016mil,3235.01mil) on Top Overlay Silk Text to Silk Clearance [6.703mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2621.378mil|Location2.X=2632.628mil|Location1.Y=2139.375mil|Location2.Y=2150.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2621.378mil|Location2.X=2632.628mil|Location1.Y=2139.375mil|Location2.Y=2150.625mil|Absolute=True">Silk To Silk Clearance Constraint: (4.026mil &lt; 10mil) Between Text "J1" (2560.01mil,2184.987mil) on Top Overlay And Track (2632.953mil,1853.583mil)(2632.953mil,2176.417mil) on Top Overlay Silk Text to Silk Clearance [4.026mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2621.245mil|Location2.X=2632.495mil|Location1.Y=2165.432mil|Location2.Y=2176.682mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2621.245mil|Location2.X=2632.495mil|Location1.Y=2165.432mil|Location2.Y=2176.682mil|Absolute=True">Silk To Silk Clearance Constraint: (8.341mil &lt; 10mil) Between Text "J1" (2560.01mil,2184.987mil) on Top Overlay And Track (2632.953mil,2176.417mil)(3050.276mil,2176.417mil) on Top Overlay Silk Text to Silk Clearance [8.341mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2659.391mil|Location2.X=2670.641mil|Location1.Y=3296.171mil|Location2.Y=3307.421mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2659.391mil|Location2.X=2670.641mil|Location1.Y=3296.171mil|Location2.Y=3307.421mil|Absolute=True">Silk To Silk Clearance Constraint: (3.612mil &lt; 10mil) Between Text "U2" (2665.016mil,3235.01mil) on Top Overlay And Track (2576.89mil,3306.102mil)(2813.11mil,3306.102mil) on Top Overlay Silk Text to Silk Clearance [3.612mil]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="ID13SYPLK0YRT0MZT5NSACSQOADCUOBIS3BO1QXHMGNBAYWGS2EFGI"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Room PowerDelievery (Bounding Region = (7045mil, 4830mil, 8575mil, 5310mil) (InComponentClass('PowerDelievery'))</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4248.976mil|Location2.X=8575mil|Location1.Y=3787.441mil|Location2.Y=5310mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4248.976mil|Location2.X=8575mil|Location1.Y=3787.441mil|Location2.Y=5310mil|Absolute=True">Room Definition: Between Component U4-REG1117-5 (4435mil,3940mil) on Top Layer And Room PowerDelievery (Bounding Region = (7045mil, 4830mil, 8575mil, 5310mil) (InComponentClass('PowerDelievery')) </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4933.15mil|Location2.X=8575mil|Location1.Y=3808.032mil|Location2.Y=5310mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4933.15mil|Location2.X=8575mil|Location1.Y=3808.032mil|Location2.Y=5310mil|Absolute=True">Room Definition: Between Room PowerDelievery (Bounding Region = (7045mil, 4830mil, 8575mil, 5310mil) (InComponentClass('PowerDelievery')) And Small Component J5-2 pin screw terminal, 5mm pitch (5130mil,4033.425mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4863.504mil|Location2.X=8575mil|Location1.Y=3942.914mil|Location2.Y=5310mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4863.504mil|Location2.X=8575mil|Location1.Y=3942.914mil|Location2.Y=5310mil|Absolute=True">Room Definition: Between Room PowerDelievery (Bounding Region = (7045mil, 4830mil, 8575mil, 5310mil) (InComponentClass('PowerDelievery')) And SMT Small Component C1-Cap (4895mil,4000mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4113.504mil|Location2.X=8575mil|Location1.Y=3852.914mil|Location2.Y=5310mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4113.504mil|Location2.X=8575mil|Location1.Y=3852.914mil|Location2.Y=5310mil|Absolute=True">Room Definition: Between Room PowerDelievery (Bounding Region = (7045mil, 4830mil, 8575mil, 5310mil) (InComponentClass('PowerDelievery')) And SMT Small Component C2-Cap (4145mil,3910mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4688.504mil|Location2.X=8575mil|Location1.Y=3796.417mil|Location2.Y=5310mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4688.504mil|Location2.X=8575mil|Location1.Y=3796.417mil|Location2.Y=5310mil|Absolute=True">Room Definition: Between Room PowerDelievery (Bounding Region = (7045mil, 4830mil, 8575mil, 5310mil) (InComponentClass('PowerDelievery')) And SMT Small Component D1-LED1 (4720mil,3853.504mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4688.504mil|Location2.X=8575mil|Location1.Y=3944.409mil|Location2.Y=5310mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4688.504mil|Location2.X=8575mil|Location1.Y=3944.409mil|Location2.Y=5310mil|Absolute=True">Room Definition: Between Room PowerDelievery (Bounding Region = (7045mil, 4830mil, 8575mil, 5310mil) (InComponentClass('PowerDelievery')) And SMT Small Component R1-Res1 (4720mil,4001.496mil) on Top Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDWMJMXELXCQ1CKUSLEPV1PACXBNLNB3ZPBTVLXSLOXWSSOUXNSJ1I"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico'))</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3140.197mil|Location2.X=10172.992mil|Location1.Y=2048.74mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3140.197mil|Location2.X=10172.992mil|Location1.Y=2048.74mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Component U1-RP2040 PICO PINS (3635.045mil,3002.346mil) on Top Layer And Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2438.504mil|Location2.X=10172.992mil|Location1.Y=1886.417mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2438.504mil|Location2.X=10172.992mil|Location1.Y=1886.417mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) And SMT Small Component D2-LED1 (2470mil,1943.504mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4442.913mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4442.913mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) And SMT Small Component D3-LED1 (4500mil,3240mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4434.409mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4434.409mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) And SMT Small Component D4-LED1 (4491.496mil,2610mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4422.913mil|Location2.X=10172.992mil|Location1.Y=1958.504mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4422.913mil|Location2.X=10172.992mil|Location1.Y=1958.504mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) And SMT Small Component D5-LED1 (4480mil,1990mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2707.913mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2707.913mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) And SMT Small Component D6-LED1 (2765mil,4075mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2886.417mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2886.417mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) And SMT Small Component R10-Res1 (2943.504mil,4075mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2843.504mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2843.504mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) And SMT Small Component R5-Res1 (2875mil,3718.504mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2438.504mil|Location2.X=10172.992mil|Location1.Y=2017.913mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2438.504mil|Location2.X=10172.992mil|Location1.Y=2017.913mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) And SMT Small Component R6-Res1 (2470mil,2075mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4261.417mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4261.417mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) And SMT Small Component R7-Res1 (4318.504mil,3240mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4254.409mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4254.409mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) And SMT Small Component R8-Res1 (4311.496mil,2610mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4262.913mil|Location2.X=10172.992mil|Location1.Y=1958.504mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4262.913mil|Location2.X=10172.992mil|Location1.Y=1958.504mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) And SMT Small Component R9-Res1 (4320mil,1990mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2648.602mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2648.602mil|Location2.X=10172.992mil|Location1.Y=2560mil|Location2.Y=4785mil|Absolute=True">Room Definition: Between Room Pico (Bounding Region = (7087.992mil, 2560mil, 10172.992mil, 4785mil) (InComponentClass('Pico')) And SMT Small Component SW1-6mmx3.5mm SMD Switch (2720mil,3725mil) on Top Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDHSNSQ1TAU1JONJUBHWWIF0SZRHDRIFTDPCVK3UNT0ETVXLV2QYTN"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Room Ethernet (Bounding Region = (7045mil, 1785mil, 7180mil, 2505mil) (InComponentClass('Ethernet'))</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3316.063mil|Location2.X=7180mil|Location1.Y=1785mil|Location2.Y=2505mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3316.063mil|Location2.X=7180mil|Location1.Y=1785mil|Location2.Y=2505mil|Absolute=True">Room Definition: Between Room Ethernet (Bounding Region = (7045mil, 1785mil, 7180mil, 2505mil) (InComponentClass('Ethernet')) And SIP Component P2-Header 6 (3870mil,1920mil) on Top Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="ID3HSVUOFLDC2PBQ1WAI2KF0513CGPTKZDCJEXAEMRP0HP2VKE3DYF"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN'))</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2628.032mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2211.851mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2628.032mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2211.851mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And Small Component J1-2 pin screw terminal, 5mm pitch (2853.425mil,2015mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4198.15mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=3750.197mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4198.15mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=3750.197mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And Small Component J2-2 pin screw terminal, 5mm pitch (4395mil,3548.425mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4188.15mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2480.197mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4188.15mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2480.197mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And Small Component J3-2 pin screw terminal, 5mm pitch (4385mil,2278.425mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4193.15mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=3090.197mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4193.15mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=3090.197mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And Small Component J4-2 pin screw terminal, 5mm pitch (4390mil,2888.425mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2167.804mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=3104.921mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2167.804mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=3104.921mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And Small Component Y1-LFXTAL057135 (2301.662mil,2750mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2473.504mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2815.591mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2473.504mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2815.591mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And SMT Small Component C3-Cap (2505mil,2758.504mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2473.504mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2968.583mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2473.504mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2968.583mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And SMT Small Component C4-Cap (2505mil,2911.496mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2787.913mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2416.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2787.913mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2416.496mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And SMT Small Component R2-Res1 (2845mil,2385mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2518.504mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2643.583mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2518.504mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2643.583mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And SMT Small Component R3-Res1 (2550mil,2586.496mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2952.914mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=3421.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2952.914mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=3421.496mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And SMT Small Component R4-Res1 (3010mil,3390mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2505.492mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=3446.398mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2505.492mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=3446.398mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And SMT Small Component SW2-6mmx3.5mm SMD Switch (2695mil,3375mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2641.378mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=3223.307mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2641.378mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=3223.307mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And SOIC Component U2-MCP2515-E/SO (2862.835mil,2980mil) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2694.681mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2675.236mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Public\Documents\Altium\Projects\EthernetToPicoCan\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2694.681mil|Location2.X=11080mil|Location1.Y=1060mil|Location2.Y=2675.236mil|Absolute=True">Room Definition: Between Room CAN (Bounding Region = (7045mil, 1060mil, 11080mil, 1735mil) (InComponentClass('CAN')) And SOIC Component U3-MAX3051ESA+ (2870mil,2565mil) on Top Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>
