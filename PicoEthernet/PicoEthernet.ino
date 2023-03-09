@@ -7,9 +7,9 @@
 byte mac[] = {
   0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED  // sets MAC address of MCU
 };
-IPAddress ip(192, 168, 1, 3);       // sets the IP of the MCU
+IPAddress ip(10, 0, 0, 102);       // sets the IP of the MCU
 
-unsigned int localPort = 1003;      // local port to listen on
+unsigned int localPort = 1002;      // local port to listen on
 
 // buffers for receiving and sending data
 char packetBuffer[UDP_TX_PACKET_MAX_SIZE];  // buffer to hold incoming packet,
@@ -34,8 +34,8 @@ static const uint32_t QUARTZ_FREQUENCY = 8UL * 1000UL * 1000UL ; // 8 MHz
 CANMessage frame; //buffer for CAN frame
 CANMessage outFrame; //out CAN message
 
-uint32_t BASE_OUT_ID = 0;
-uint32_t BASE_OUT_LEN = 6;
+uint32_t BASE_OUT_ID = 1;
+uint32_t BASE_OUT_LEN = 3;
 
 uint32_t ARM_OUT_ID = 1;
 uint32_t ARM_OUT_LEN = 3;
@@ -71,24 +71,9 @@ void loop() {
   // if there's data available, read a packet
 
   //read ETHERNET msg
-  // outFrame.id = BASE_OUT_ID;
-  // outFrame.len = BASE_OUT_LEN;
-  // memcpy(outFrame.data, testy, 6);
-  // sendCanMsg();
-  
+
   int packetSize = Udp.parsePacket();
   if (packetSize) {
-    Serial.print("From ");
-    IPAddress remote = Udp.remoteIP();
-    for (int i=0; i < 4; i++) {
-      Serial.print(remote[i], DEC);
-      if (i < 3) {
-        Serial.print(".");
-      }
-    }
-    Serial.print(", port ");
-    Serial.println(Udp.remotePort());
-
     // read the packet into packetBuffer
     Udp.read(packetBuffer, UDP_TX_PACKET_MAX_SIZE);
     
@@ -97,25 +82,17 @@ void loop() {
         Serial.println("UPD Address: 0xff");
         outFrame.id = BASE_OUT_ID;
         outFrame.len = BASE_OUT_LEN;
-        memcpy(outFrame.data, packetBuffer+1, 6);
+        memcpy(outFrame.data, packetBuffer+1, BASE_OUT_LEN);
         sendCanMsg();
         sendAckEthernet(0);
-        break;
-      case 0x01:
-        Serial.println("UPD Address: 0x01");
-        outFrame.id = ARM_OUT_ID;
-        outFrame.len = ARM_OUT_LEN;
-        memcpy(outFrame.data, packetBuffer+1, 3);
-        sendCanMsg();
-        sendAckEthernet(1);
-        break;
-      case 0x02:
-        Serial.println("UDP Address: 0x02");
+        
         outFrame.id = CLAW_OUT_ID;
         outFrame.len = CLAW_OUT_LEN;
-        memcpy(outFrame.data, packetBuffer+1, 3);
+        memcpy(outFrame.data, packetBuffer+4, CLAW_OUT_LEN);
+        //printCanMsg(outFrame);
         sendCanMsg();
-        sendAckEthernet(2);
+
+        sendAckEthernet(0);
         break;
     }
   }
@@ -170,14 +147,12 @@ void configureEthernet(){
 void onCanRecieve(){
   can.isr();
   can.receive(frame);
-  printCanMsg(frame);
+  //printCanMsg(frame);
 
 }
 
 void printCanMsg(CANMessage &frame){
     Serial.print ("  id: ");Serial.println (frame.id,HEX);
-    Serial.print ("  ext: ");Serial.println (frame.ext);
-    Serial.print ("  rtr: ");Serial.println (frame.rtr);
     Serial.print ("  len: ");Serial.println (frame.len);
     Serial.print ("  data: ");
     for(int x=0;x<frame.len;x++) {
